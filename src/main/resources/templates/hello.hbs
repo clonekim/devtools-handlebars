@@ -1,0 +1,18 @@
+{{#partial "title"}} About {{/partial}}
+{{#partial "content"}}
+  ABOUT
+
+{{#foo}}
+  {{.}}
+  {{/foo}}
+
+
+  {{{{raw}}}}
+  <script>
+      var a =  {
+            b: {{i.name}}
+     }
+  </script>
+  {{{{/raw}}}}
+{{/partial}}
+{{> layout}}
