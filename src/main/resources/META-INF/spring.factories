@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+devtools.handlebars.HandlebarsAutoConfiguration,\
+devtools.handlebars.HandlebarsHelpersAutoConfiguration

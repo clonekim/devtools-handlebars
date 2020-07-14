@@ -23,5 +23,10 @@ class HandlebarsViewResolver: AbstractTemplateViewResolver {
     override fun requiredViewClass(): Class<*> {
         return HandlebarsView::class.java
     }
+
+    fun registerHelpers(bean: Any): HandlebarsViewResolver {
+        handlebars.registerHelpers(bean)
+        return this
+    }
 }
 

@@ -12,7 +12,7 @@ class HandlebarsView: AbstractTemplateView() {
 
     lateinit var template: Template
 
-    val valueResolvers: Array<ValueResolver> = ValueResolver.VALUE_RESOLVERS
+    private val valueResolvers: Array<ValueResolver> = ValueResolver.VALUE_RESOLVERS
 
     override fun renderMergedTemplateModel(map: MutableMap<String, Any>, req: HttpServletRequest, resp: HttpServletResponse) {
 
