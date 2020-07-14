@@ -7,4 +7,6 @@ import org.springframework.boot.context.properties.ConstructorBinding
 data class HandlebarsProperties (
         val prefix: String = "",
         val suffix: String = "",
-        var cache: Boolean = false)
+        var cache: Boolean = false,
+        val delimiter: String = "{{,}}"
+)

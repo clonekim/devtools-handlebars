@@ -3,6 +3,8 @@ package devtools.handlebars
 import com.github.jknack.handlebars.EscapingStrategy
 import com.github.jknack.handlebars.Handlebars
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader
+import com.github.jknack.handlebars.io.FileTemplateLoader
+import com.github.jknack.handlebars.io.URLTemplateLoader
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -20,16 +22,20 @@ class HandlebarsAutoConfiguration(private val properties: HandlebarsProperties) 
     @Bean
     @ConditionalOnMissingBean
     fun handlebars(): Handlebars {
-        return Handlebars(ClassPathTemplateLoader( resolve(properties.prefix), properties.suffix)).apply {
+        return Handlebars(findLoder(properties.prefix, properties.suffix )).apply {
             with(EscapingStrategy.NOOP)
             with(EscapingStrategy.XML)
+
+            val delimters =  properties.delimiter.split(",")
+
+            startDelimiter = delimters[0]
+            endDelimiter = delimters[1]
         }
     }
 
     @Bean
     @ConditionalOnMissingBean
     fun handlebarsViewResolver(): HandlebarsViewResolver {
-
         return HandlebarsViewResolver()
                 .apply {
                     handlebars = handlebars()
@@ -38,8 +44,18 @@ class HandlebarsAutoConfiguration(private val properties: HandlebarsProperties) 
                 }
     }
 
+    fun findLoder(prefix: String, suffix: String): URLTemplateLoader {
+        return when {
+            prefix.startsWith(ResourceUtils.CLASSPATH_URL_PREFIX) ->
+                ClassPathTemplateLoader(prefix.substring(ResourceUtils.CLASSPATH_URL_PREFIX.length), suffix)
+            prefix.startsWith(ResourceUtils.FILE_URL_PREFIX) ->
+                FileTemplateLoader(prefix.substring(ResourceUtils.FILE_URL_PREFIX.length), suffix)
+            else -> throw IllegalArgumentException()
+        }
 
-    fun resolve(prefix: String) :String? {
+    }
+
+    fun resolve(prefix: String): String? {
         var protocol: String? = null
 
         if (prefix.startsWith(ResourceUtils.CLASSPATH_URL_PREFIX)) {
