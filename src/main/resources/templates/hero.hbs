@@ -1,0 +1,23 @@
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+</head>
+<body>
+    <h3>영웅들</h3>
+
+    {{{{raw}}}}
+    <div id="app">
+        {{message}}
+    </div>
+    {{{{/raw}}}}
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Vue시험중'
+            }
+        })
+    </script>
+</body>
+</html>

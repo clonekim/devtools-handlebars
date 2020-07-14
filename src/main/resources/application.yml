@@ -1,0 +1,4 @@
+spring:
+  handlebars:
+    prefix: classpath:/templates
+    suffix: .hbs
