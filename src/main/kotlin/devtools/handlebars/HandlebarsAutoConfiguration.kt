@@ -33,6 +33,7 @@ class HandlebarsAutoConfiguration(private val properties: HandlebarsProperties) 
         return HandlebarsViewResolver()
                 .apply {
                     handlebars = handlebars()
+                    isCache = properties.cache
                     order = Ordered.HIGHEST_PRECEDENCE
                 }
     }
