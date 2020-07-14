@@ -15,6 +15,13 @@ class HandlebarsViewResolver: AbstractTemplateViewResolver {
 
 
     override fun buildView(viewName: String): AbstractUrlBasedView {
+
+        val viewName = if (viewName.isEmpty() || viewName.isBlank()) {
+            "index"
+        } else {
+           viewName
+        }
+
         val view = super.buildView(viewName) as HandlebarsView
         view.template = handlebars.compile(viewName)
         return view

@@ -26,10 +26,13 @@ class HandlebarsAutoConfiguration(private val properties: HandlebarsProperties) 
             with(EscapingStrategy.NOOP)
             with(EscapingStrategy.XML)
 
-            val delimters =  properties.delimiter.split(",")
+            properties.delimiter?.split(",").let {
+                if(it?.size == 2) {
+                    startDelimiter = it[0]
+                    endDelimiter = it[1]
+                }
+            }
 
-            startDelimiter = delimters[0]
-            endDelimiter = delimters[1]
         }
     }
 
@@ -53,22 +56,6 @@ class HandlebarsAutoConfiguration(private val properties: HandlebarsProperties) 
             else -> throw IllegalArgumentException()
         }
 
-    }
-
-    fun resolve(prefix: String): String? {
-        var protocol: String? = null
-
-        if (prefix.startsWith(ResourceUtils.CLASSPATH_URL_PREFIX)) {
-            protocol = ResourceUtils.CLASSPATH_URL_PREFIX;
-        } else if (prefix.startsWith(ResourceUtils.FILE_URL_PREFIX)) {
-            protocol = ResourceUtils.FILE_URL_PREFIX;
-        }
-
-        protocol?.let {
-            return prefix.substring(protocol.length)
-        }
-
-        return null
     }
 
 

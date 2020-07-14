@@ -8,5 +8,5 @@ data class HandlebarsProperties (
         val prefix: String = "",
         val suffix: String = "",
         var cache: Boolean = false,
-        val delimiter: String = "{{,}}"
+        val delimiter: String? = "{{,}}"
 )
